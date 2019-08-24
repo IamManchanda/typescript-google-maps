@@ -18,13 +18,20 @@ class Gmap {
 
   addMarker(mappable: Mappable) {
     const { lat, lng } = mappable.location;
-    new google.maps.Marker({
+    const content = mappable.markerContent();
+    const marker = new google.maps.Marker({
       map: this.gMap,
       position: {
         lat,
         lng,
       },
     } as GMapMarkerConfig);
+
+    const handleMarkerClick: () => void = () => {
+      const infoWindow = new google.maps.InfoWindow({ content });
+      infoWindow.open(this.gMap, marker);
+    };
+    marker.addListener("click", handleMarkerClick);
   }
 }
 

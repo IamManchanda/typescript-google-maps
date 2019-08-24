@@ -1,5 +1,6 @@
 export interface Mappable {
   location: google.maps.LatLngLiteral;
+  markerContent(): string;
 }
 
 export interface GMapConfig {

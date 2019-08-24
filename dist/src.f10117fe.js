@@ -137,16 +137,28 @@ function () {
   }
 
   Gmap.prototype.addMarker = function (mappable) {
+    var _this = this;
+
     var _a = mappable.location,
         lat = _a.lat,
         lng = _a.lng;
-    new google.maps.Marker({
+    var content = mappable.markerContent();
+    var marker = new google.maps.Marker({
       map: this.gMap,
       position: {
         lat: lat,
         lng: lng
       }
     });
+
+    var handleMarkerClick = function handleMarkerClick() {
+      var infoWindow = new google.maps.InfoWindow({
+        content: content
+      });
+      infoWindow.open(_this.gMap, marker);
+    };
+
+    marker.addListener("click", handleMarkerClick);
   };
 
   return Gmap;
@@ -85148,6 +85160,10 @@ function () {
     };
   }
 
+  User.prototype.markerContent = function () {
+    return "\n      <div>\n        <h1>User Name: " + this.name + "</h1>\n      </div>\n    ";
+  };
+
   return User;
 }();
 
@@ -85170,6 +85186,10 @@ function () {
       lng: parseFloat(faker_1.address.longitude())
     };
   }
+
+  Company.prototype.markerContent = function () {
+    return "\n      <div>\n        <h1>Company Name: " + this.companyName + "</h1>\n        <h3>Catch Phrase: " + this.catchPhrase + "</h3>\n      </div>\n    ";
+  };
 
   return Company;
 }();
@@ -85225,7 +85245,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55568" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59468" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
