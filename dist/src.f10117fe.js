@@ -117,7 +117,43 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/faker/lib/fake.js":[function(require,module,exports) {
+})({"src/Gmap.ts":[function(require,module,exports) {
+"use strict";
+
+exports.__esModule = true;
+
+var Gmap =
+/** @class */
+function () {
+  function Gmap(containerId) {
+    this.containerId = containerId;
+    this.gMap = new google.maps.Map(document.getElementById(containerId), {
+      zoom: 2,
+      center: {
+        lat: 0,
+        lng: 0
+      }
+    });
+  }
+
+  Gmap.prototype.addMarker = function (mappable) {
+    var _a = mappable.location,
+        lat = _a.lat,
+        lng = _a.lng;
+    new google.maps.Marker({
+      map: this.gMap,
+      position: {
+        lat: lat,
+        lng: lng
+      }
+    });
+  };
+
+  return Gmap;
+}();
+
+exports["default"] = Gmap;
+},{}],"node_modules/faker/lib/fake.js":[function(require,module,exports) {
 /*
   fake.js - generator method for combining faker methods based on string input
 
@@ -85094,7 +85130,7 @@ exports['zh_TW'] = require('./locales/zh_TW');
 var Faker = require('./lib');
 var faker = new Faker({ locales: require('./lib/locales') });
 module['exports'] = faker;
-},{"./lib":"node_modules/faker/lib/index.js","./lib/locales":"node_modules/faker/lib/locales.js"}],"src/User.ts":[function(require,module,exports) {
+},{"./lib":"node_modules/faker/lib/index.js","./lib/locales":"node_modules/faker/lib/locales.js"}],"src/data/User.ts":[function(require,module,exports) {
 "use strict";
 
 exports.__esModule = true;
@@ -85116,7 +85152,7 @@ function () {
 }();
 
 exports["default"] = User;
-},{"faker":"node_modules/faker/index.js"}],"src/Company.ts":[function(require,module,exports) {
+},{"faker":"node_modules/faker/index.js"}],"src/data/Company.ts":[function(require,module,exports) {
 "use strict";
 
 exports.__esModule = true;
@@ -85150,17 +85186,18 @@ var __importDefault = this && this.__importDefault || function (mod) {
 
 exports.__esModule = true;
 
-var User_1 = __importDefault(require("./User"));
+var Gmap_1 = __importDefault(require("./Gmap"));
 
-var Company_1 = __importDefault(require("./Company"));
+var User_1 = __importDefault(require("./data/User"));
 
+var Company_1 = __importDefault(require("./data/Company"));
+
+var myGmap = new Gmap_1["default"]("map");
 var myUser = new User_1["default"]();
+myGmap.addMarker(myUser);
 var myCompany = new Company_1["default"]();
-console.log({
-  myUser: myUser,
-  myCompany: myCompany
-});
-},{"./User":"src/User.ts","./Company":"src/Company.ts"}],"../../../../../.nvm/versions/node/v12.8.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+myGmap.addMarker(myCompany);
+},{"./Gmap":"src/Gmap.ts","./data/User":"src/data/User.ts","./data/Company":"src/data/Company.ts"}],"../../../../../.nvm/versions/node/v12.8.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -85188,7 +85225,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61594" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55568" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

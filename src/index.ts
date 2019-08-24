@@ -1,9 +1,11 @@
-import User from "./User";
-import Company from "./Company";
+import Gmap from "./Gmap";
+import User from "./data/User";
+import Company from "./data/Company";
 
-const myUser = new User();
-const myCompany = new Company();
-console.log({
-  myUser,
-  myCompany,
-});
+const myGmap: Gmap = new Gmap("map");
+
+const myUser: User = new User();
+myGmap.addMarker(myUser);
+
+const myCompany: Company = new Company();
+myGmap.addMarker(myCompany);
